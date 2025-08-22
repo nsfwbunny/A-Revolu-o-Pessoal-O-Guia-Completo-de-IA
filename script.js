@@ -1,41 +1,51 @@
-document.addEventListener('DOMContentLoaded', () => {
+const canvas = document.getElementById('matrix-canvas');
+const ctx = canvas.getContext('2d');
 
-    // --- Accordion Logic ---
-    const accordionHeaders = document.querySelectorAll('.module-header');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const accordionItem = header.parentElement;
-            const accordionContent = header.nextElementSibling;
+// Using Katakana, an alphabet that looks futuristic, like in the movie
+const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const nums = '0123456789';
 
-            // Toggle active class on the item for styling the header
-            accordionItem.classList.toggle('active');
+const alphabet = katakana + latin + nums;
 
-            // Toggle content visibility
-            if (accordionContent.style.maxHeight) {
-                accordionContent.style.maxHeight = null;
-            } else {
-                accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
-            }
-        });
-    });
+const fontSize = 16;
+const columns = canvas.width / fontSize;
 
-    // --- Scroll Animation Logic (Fade-in) ---
-    const animatedElements = document.querySelectorAll('.fade-in');
+const rainDrops = [];
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); // Optional: stop observing once visible
-            }
-        });
-    }, {
-        threshold: 0.1 // Trigger when 10% of the element is visible
-    });
+for (let x = 0; x < columns; x++) {
+    rainDrops[x] = 1;
+}
 
-    animatedElements.forEach(element => {
-        observer.observe(element);
-    });
+const draw = () => {
+    // Black BG for the canvas
+    // translucent BG to show trail
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    ctx.fillStyle = '#00ff41'; // Green text
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+    }
+};
+
+setInterval(draw, 30);
+
+// Adjust canvas size on window resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    // We would need to recalculate columns and rainDrops array here for a perfect resize,
+    // but for this test, a simple resize is sufficient.
 });
