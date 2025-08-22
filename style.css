@@ -28,14 +28,14 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Position behind everything */
+    z-index: -1;
 }
 
 /* --- Content Wrapper --- */
 .content-wrapper {
     position: relative;
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay to improve readability */
+    background-color: rgba(0, 0, 0, 0.85); /* Darker overlay for better readability */
 }
 
 .container {
@@ -50,10 +50,10 @@ h1, h2, h3 {
     font-weight: 700;
     color: var(--accent-matrix);
     margin-bottom: 20px;
-    text-shadow: 0 0 5px var(--accent-matrix);
+    text-shadow: 0 0 7px rgba(0, 255, 65, 0.7);
 }
 
-h1 { font-size: 3rem; line-height: 1.2; }
+h1 { font-size: 3rem; line-height: 1.2; text-align: center; }
 h2 { font-size: 2.5rem; text-align: center; margin-bottom: 40px; }
 p { margin-bottom: 15px; color: var(--text-secondary); }
 
@@ -63,7 +63,7 @@ p { margin-bottom: 15px; color: var(--text-secondary); }
     background-color: var(--accent-matrix);
     color: #000;
     font-family: var(--font-headings);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.2rem;
     text-decoration: none;
     padding: 18px 40px;
@@ -71,18 +71,26 @@ p { margin-bottom: 15px; color: var(--text-secondary); }
     text-align: center;
     border: 1px solid var(--accent-matrix);
     transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
 }
 
 .cta-button:hover {
     background-color: #000;
     color: var(--accent-matrix);
-    box-shadow: 0 0 15px var(--accent-matrix);
+    box-shadow: 0 0 20px var(--accent-matrix);
 }
 
 /* --- Hero Section --- */
 .hero {
     text-align: center;
     padding-top: 100px;
+}
+
+.hero .subtitle {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
 }
 
 .vsl-placeholder {
@@ -110,32 +118,68 @@ section {
     border-bottom: 1px solid #222;
 }
 
-section:last-of-type {
-    border-bottom: none;
-}
-
-.problem, .solution, .final-cta {
+.problem, .offer, .guarantee, .faq, .final-cta {
     text-align: center;
 }
 
-.modules-list {
+/* --- Accordion (Modules & FAQ) --- */
+.accordion {
     max-width: 800px;
     margin: 40px auto 0 auto;
+    text-align: left;
 }
 
-.module-item {
+.accordion-item {
     background-color: rgba(17, 17, 17, 0.8);
     border: 1px solid #222;
-    padding: 20px;
-    margin-bottom: 15px;
     border-radius: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
-.module-item h3 {
-    font-size: 1.3rem;
-    color: var(--accent-matrix);
-    font-family: var(--font-body);
+.accordion-header {
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
+
+.accordion-header:hover {
+    background-color: #1a1a1a;
+}
+
+.accordion-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-family: var(--font-body);
+    text-shadow: none;
+}
+
+.accordion-header::after {
+    content: '+';
+    font-size: 2rem;
+    color: var(--accent-matrix);
+    transition: transform 0.3s ease;
+}
+
+.accordion-item.active .accordion-header::after {
+    transform: rotate(45deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.accordion-content p {
+    padding: 0 20px 20px 20px;
+    margin: 0;
+    font-size: 1rem;
+}
+
 
 /* --- Testimonials Section --- */
 .testimonials-grid {
@@ -161,12 +205,33 @@ section:last-of-type {
     font-weight: 700;
 }
 
+/* --- Offer Section --- */
+.offer ul {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.offer ul li {
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-matrix);
+    margin-top: 30px;
+}
+
 /* --- Footer --- */
 footer {
     text-align: center;
     padding: 40px 0 20px 0;
     color: var(--text-secondary);
     font-size: 0.9rem;
+    border-top: 1px solid #222;
 }
 
 footer .container {
@@ -180,6 +245,6 @@ footer .container {
 }
 
 @media (max-width: 480px) {
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.8rem; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
 }
