@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            // Note: A more robust implementation would re-initialize columns and rainDrops here.
         });
     }
 
